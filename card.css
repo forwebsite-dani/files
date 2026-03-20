@@ -1,0 +1,187 @@
+/* ============================================
+   CARD BASE STYLES - From home.css
+   ============================================ */
+
+.card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 19px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 144px;
+    cursor: pointer;
+    position: relative;
+    overflow: visible;
+    border: 2px solid transparent;
+    isolation: isolate;
+    animation: cardEnter 0.6s var(--anim-ease) backwards;
+}
+
+/* Wide cards for grades - 20% smaller */
+.card.wide {
+    height: 150px;
+}
+
+/* Subject cards - 20% smaller, horizontal layout */
+.card.subject {
+    height: 112px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 19px 26px;
+    overflow: hidden;
+}
+
+.card.subject .card-float {
+    height: 48px;
+    width: 48px;
+    flex-shrink: 0;
+    margin-bottom: 0;
+}
+
+.card.subject .emoji-scene {
+    width: 48px;
+    height: 48px;
+}
+
+.card.subject .emoji-main {
+    font-size: 32px;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+}
+
+.card.subject .text-content {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+}
+
+.card.subject .card-title {
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.card.subject .card-subtitle {
+    text-align: left;
+    margin-top: 0;
+}
+
+/* Background pattern */
+.card-bg-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.4;
+    background-image: radial-gradient(#f1f5f9 1px, transparent 1px);
+    background-size: 20px 20px;
+    z-index: 0;
+    transition: opacity 0.3s ease;
+    border-radius: var(--radius);
+}
+
+/* Emoji Scene - 20% smaller */
+.card-float {
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease;
+    margin-bottom: 6px;
+}
+
+.emoji-scene {
+    position: relative;
+    width: 144px;
+    height: 88px;
+}
+
+.emoji-main {
+    font-size: 42px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.15));
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 3;
+}
+
+.emoji-deco {
+    position: absolute;
+    font-size: 22px;
+    opacity: 0.85;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+    z-index: 2;
+}
+
+.d1 { 
+    top: 0; 
+    right: 20px;
+    /* animation removed */
+}
+
+.d2 { 
+    bottom: 4px;
+    left: 20px;
+    /* animation removed */
+}
+
+/* Text - 20% smaller */
+.card-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin-top: 3px;
+    color: #1e293b;
+    z-index: 2;
+    transition: transform 0.3s ease;
+}
+
+.card-subtitle {
+    font-size: 10px;
+    color: #94a3b8;
+    margin-top: 3px;
+    font-weight: 500;
+    z-index: 2;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+/* Hover states – ALL REMOVED as per request */
+/* No hover effects remain */
+
+/* Wave */
+.card-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    border-radius: 0 0 var(--radius) var(--radius);
+}
+
+/* Grade-specific wave colors */
+.card[data-card="grade9"] .card-wave { 
+    background: linear-gradient(90deg, transparent, #3b82f6, transparent); 
+}
+.card[data-card="grade10"] .card-wave { 
+    background: linear-gradient(90deg, transparent, #10b981, transparent); 
+}
+.card[data-card="grade11"] .card-wave { 
+    background: linear-gradient(90deg, transparent, #f59e0b, transparent); 
+}
+.card[data-card="grade12"] .card-wave { 
+    background: linear-gradient(90deg, transparent, #ef4444, transparent); 
+}

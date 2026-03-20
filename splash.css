@@ -1,0 +1,215 @@
+/* ============================================
+   SPLASH SCREEN - Complete Styles
+   ============================================ */
+
+.splash-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    height: -webkit-fill-available;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10001;
+    opacity: 1;
+    visibility: visible;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    cursor: default;
+}
+
+/* ============================================
+   SPLASH CONTENT
+   ============================================ */
+
+.splash-content {
+    text-align: center;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    position: relative;
+}
+
+/* ============================================
+   SPLASH LOGO - Black bg with fading white border
+   ============================================ */
+
+.splash-logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+    /* Black background */
+    background: #000000;
+    border-radius: 20px;
+    /* Padding creates space for the fade effect */
+    padding: 4px;
+    /* Gradient border that fades from black (inside) to white (outside) */
+    position: relative;
+}
+
+.splash-logo::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 22px;
+    padding: 2px;
+    background: linear-gradient(135deg, 
+        rgba(0,0,0,1) 0%, 
+        rgba(0,0,0,0.8) 30%,
+        rgba(128,128,128,0.5) 60%,
+        rgba(255,255,255,0.8) 100%
+    );
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+.splash-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    display: block;
+    /* Ensure image sits on black bg */
+    background: #000000;
+}
+
+/* ============================================
+   SPLASH TEXT
+   ============================================ */
+
+.splash-main-text {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
+    color: #1e293b;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.splash-main-text span {
+    color: #3b82f6;
+}
+
+.splash-sub-text {
+    font-size: clamp(0.85rem, 4vw, 1rem);
+    color: #64748b;
+    margin-top: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* ============================================
+   SPLASH FOOTER
+   ============================================ */
+
+.splash-footer {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.9rem;
+    color: #94a3b8;
+    white-space: nowrap;
+}
+
+/* ============================================
+   SPLASH LOADING SPINNER
+   ============================================ */
+
+#splashLoading {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+    backdrop-filter: blur(4px);
+}
+
+.splash-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(59, 130, 246, 0.2);
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: splashSpin 1s linear infinite;
+}
+
+@keyframes splashSpin {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   HIDDEN STATE
+   ============================================ */
+
+.splash-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.5s ease, visibility 0.5s;
+}
+
+/* ============================================
+   MOBILE SPECIFIC
+   ============================================ */
+
+@media (max-width: 768px) {
+    .splash-overlay {
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+    
+    .splash-content {
+        touch-action: manipulation;
+        width: 90vw;
+    }
+    
+    .splash-logo {
+        width: 70px;
+        height: 70px;
+        padding: 3px;
+    }
+    
+    .splash-logo::before {
+        border-radius: 20px;
+        padding: 1.5px;
+        inset: -1.5px;
+    }
+    
+    .splash-logo img {
+        border-radius: 14px;
+    }
+    
+    .splash-footer {
+        bottom: 30px;
+        font-size: 0.8rem;
+    }
+}

@@ -1,0 +1,141 @@
+
+
+/* ============================================
+   CONTENT & VIEWS
+   ============================================ */
+
+.content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    min-height: 0;
+}
+
+.view {
+    display: none;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    padding: clamp(8px, 1.5vw, 16px);
+    animation: fadeIn 0.3s ease;
+    min-height: 0;
+    overflow: hidden;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.view.active {
+    display: flex;
+}
+
+.view-header {
+   
+    flex-shrink: 0;
+    padding: 0 4px;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60px;
+}
+
+.view-header h1 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    color: var(--foreground);
+    margin-bottom: 6px;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, var(--foreground), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.view-header h2 {
+    font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+    font-weight: 700;
+    color: var(--foreground);
+    margin-bottom: 6px;
+}
+
+/* Back Button - Desktop: Left positioned, Mobile: Absolute */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    color: var(--foreground);
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: var(--shadow);
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.back-btn:hover {
+    transform: translateY(-50%) translateX(-3px);
+    box-shadow: var(--shadow-lg);
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary-dark);
+}
+
+.back-btn:active {
+    transform: translateY(-50%) translateX(0);
+}
+
+.back-btn .material-icons {
+    font-size: 24px;
+}
+/* ============================================
+   CARDS GRID SYSTEM - From home.css
+   ============================================ */
+
+/* Cards Grid Layouts */
+.cards-grid {
+    display: grid;
+    gap: var(--gap);
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* Grades grid - 2x2 wide cards */
+.cards-grid.grades { 
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Subjects 9-10 - 5 rows, 2 columns (10 cards) */
+.cards-grid.subjects-10 { 
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Subjects 11-12 - 3 rows, 2 columns (6 cards) */
+.cards-grid.subjects-6 { 
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 900px;
+    margin: 0 auto;
+}

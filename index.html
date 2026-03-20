@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Scholar's Archive</title>
+
+    <!-- Website Icon (Tab Image) -->
+    <link rel="icon" type="png" href="profile.png">
+
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
+       <!-- ================================================= -->
+    <!--                   Styles (in correct order)      -->
+    <!-- ================================================= -->
+
+    <!-- 1. main1.css        → :root variables, resets, base layout -->
+    <link rel="stylesheet" href="main1.css">
+
+    <!-- 2. main&head.css    → Header + main container layout -->
+    <link rel="stylesheet" href="main&head.css">
+
+    <!-- 3. content&views.css → View switching + cards grid system -->
+    <link rel="stylesheet" href="content&views.css">
+
+    <!-- 4. card.css         → Card component styles -->
+    <link rel="stylesheet" href="card.css">
+
+    <!-- 5. fab.css          → Floating Action Button -->
+    <link rel="stylesheet" href="fab.css">
+
+    <!-- 6. selection.css    → Selection panel / bottom sheet -->
+    <link rel="stylesheet" href="selection.css">
+
+    <!-- 7. ai-modal.css     → AI tools modal -->
+    <link rel="stylesheet" href="ai-modal.css">
+
+    <!-- 8. loader&toast.css → Global loader + toast notifications -->
+    <link rel="stylesheet" href="loader&toast.css">
+
+    <!-- 9. utility.css      → Utility modals (coffee, devices, etc.) -->
+    <link rel="stylesheet" href="utility.css">
+
+    <!-- 10. view.css        → Grade / subject / unit views -->
+    <link rel="stylesheet" href="view.css">
+<!-- 11. splash.css      → Splash screen - MUST be before login -->
+<link rel="stylesheet" href="splash.css">
+    <!-- 12. login.css       → Login screen — highest specificity / overlay -->
+    <link rel="stylesheet" href="login.css">
+
+    <!-- 13. mobile.css      → Responsive / mobile adjustments — MUST be last -->
+    <link rel="stylesheet" href="mobile.css">
+   
+</head>
+<body>
+    <!-- SPLASH SCREEN -->
+<div id="splashScreen" class="splash-overlay">
+    <div class="splash-content">
+        <div class="splash-logo">
+            <img src="profile.png" alt="Scholar's Archive">
+        </div>
+        <h1 class="splash-main-text">designed by us,<br><span>for us</span></h1>
+        <p class="splash-sub-text">Scholar's Archive</p>
+    </div>
+    <div class="splash-footer">
+        <p>made by <strong>K.quant production</strong></p>
+    </div>
+</div>
+    <!-- LOGIN SECTION -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h1>Scholar's Archive</h1>
+            <p>Grade 9-12 Study Materials</p>
+            <div class="input-group">
+                <label>Phone Number</label>
+                <div class="phone-input-wrapper">
+                    <span class="phone-prefix">+251</span>
+                    <input type="tel" id="phoneInput" placeholder="9XXXXXXXX" maxlength="9" pattern="[9][0-9]{8}" inputmode="numeric">
+                </div>
+                <div class="phone-error" id="phoneError"></div>
+            </div>
+
+            <!-- Hidden fields for autofill prevention -->
+            <div style="position:absolute;opacity:0;height:0;overflow:hidden;">
+                <input type="text" tabindex="-1" autocomplete="username">
+                <input type="password" tabindex="-1" autocomplete="password">
+            </div>
+
+            <div class="input-group">
+                <label>Username</label>
+                <input type="text" id="usernameInput" placeholder="Your name" autocomplete="off">
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="current-password">
+                    <button type="button" class="password-toggle" id="passwordToggle">
+                        <span class="material-icons">visibility_off</span>
+                    </button>
+                </div>
+            </div>
+
+            <button class="login-btn" onclick="login()">Login</button>
+
+            <div class="contact-section">
+                <div class="contact-title">Need Access?</div>
+                <div class="contact-buttons">
+                    <a href="sms:+251902652464" class="contact-btn message">
+                        <span class="material-icons">sms</span> SMS
+                    </a>
+                    <a href="https://instagram.com/daniel_g.br2" target="_blank" class="contact-btn instagram">
+                        <span class="material-icons">photo_camera</span> IG
+                    </a>
+                    <a href="https://t.me/danielgbr2" target="_blank" class="contact-btn telegram">
+                        <span class="material-icons">send</span> TG
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Device Limit Modal -->
+    <div class="modal-overlay" id="deviceLimitModal">
+        <div class="modal-box">
+            <div class="modal-icon">
+                <span class="material-icons">error_outline</span>
+            </div>
+            <h2 class="modal-title">Device Limit Reached</h2>
+            <p class="modal-message">You have reached your device limit of <strong id="limitNumber">3</strong>.</p>
+            <p class="modal-subtitle">Contact admin to request access:</p>
+            <div class="modal-contact-row">
+                <a href="https://instagram.com/daniel_g.br2" target="_blank" class="contact-btn instagram">
+                    <span class="material-icons">photo_camera</span>
+                    <span>IG</span>
+                </a>
+                <a href="https://t.me/danielgbr2" target="_blank" class="contact-btn telegram">
+                    <span class="material-icons">send</span>
+                    <span>TG</span>
+                </a>
+                <a href="sms:+251902652464" class="contact-btn sms">
+                    <span class="material-icons">sms</span>
+                    <span>SMS</span>
+                </a>
+            </div>
+            <button class="modal-btn-cancel" onclick="closeDeviceLimitModal()">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Buy Coffee Modal -->
+    <div class="modal-overlay" id="buyCoffeeModal">
+        <div class="modal-box">
+            <h2 class="modal-title">Buy me a coffee</h2>
+            <p class="modal-message">Support the developer</p>
+            <input type="number" id="coffeeAmount" class="modal-input" placeholder="Amount (Birr)" min="1" step="1" >
+            <div class="modal-actions">
+                <button class="modal-btn-cancel" onclick="closeBuyCoffeeModal()">Cancel</button>
+                <button class="modal-btn-primary" onclick="buyCoffee()">Buy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Devices Modal -->
+    <div class="modal-overlay" id="userDevicesModal">
+        <div class="modal-box">
+            <h2 class="modal-title">Your Devices</h2>
+            <div class="devices-list" id="devicesList"></div>
+            <button class="modal-btn-logout" onclick="logoutCurrentDevice()">Logout from this device</button>
+            <button class="modal-btn-cancel" onclick="closeUserDevicesModal()">Close</button>
+        </div>
+    </div>
+
+    <div class="login-toast" id="loginToast">
+        <span class="material-icons" id="loginToastIcon">check_circle</span>
+        <span id="loginToastMessage">Welcome!</span>
+    </div>
+
+    <!-- MAIN APP SECTION -->
+    <div class="app-container" id="appContainer">
+        <button id="fixedToggle" class="fixed-toggle">
+            <span class="material-icons">chevron_right</span>
+        </button>
+
+        <aside class="sidebar">
+            <div class="sidebar-content">
+                <div class="profile-section">
+                   <div class="profile-pic">
+                        <img src="profile.png" alt="Profile">
+                    </div>
+                    <div class="profile-info">
+                        <h4>Scholar's Archive</h4>
+                        <p>Grade 9-12 Materials</p>
+                    </div>
+                </div>
+                <div class="about-section">
+                    <p><span class="material-icons">person</span> Developer: Daniel Gebrehiwet</p>
+                    <p><span class="material-icons">email</span> Email: danielgebrehiwet2005@gmail.com</p>
+                    <p><span class="material-icons">code</span> Version 1.0</p>
+                    <p><span class="material-icons">school</span> 100+ Resources</p>
+                </div>
+                <div class="sidebar-links">
+                    <a href="#" class="sidebar-link" onclick="showToast('Feedback feature coming soon!', 'info')">
+                        <span class="material-icons">feedback</span> Feedback
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showToast('Help is on the way!', 'info')">
+                        <span class="material-icons">help</span> Help
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showToast('Check our Instagram', 'info'); window.open('https://instagram.com/daniel_g.br2', '_blank')">
+                        <span class="material-icons">photo_camera</span> Instagram
+                    </a>
+                    <a href="#" class="sidebar-link" onclick="showToast('Join our Telegram', 'info'); window.open('https://t.me/danielgbr2', '_blank')">
+                        <span class="material-icons">send</span> Telegram
+                    </a>
+                </div>
+                <button class="coffee-btn" onclick="showBuyCoffeeModal()">
+                    <span class="material-icons">coffee</span> Buy me a coffee
+                </button>
+            </div>
+        </aside>
+
+        <div class="sidebar-backdrop" onclick="toggleSidebar()"></div>
+
+        <!-- Toast Container - Bottom Center -->
+        <div class="toast-container" id="toastContainer"></div>
+
+        <main class="main">
+            <header>
+                <div class="header-left">
+                    <div class="header-title">Grade 9-12 Study Hub</div>
+                </div>
+                <div class="header-right">
+                    <button class="icon-btn" title="Settings" onclick="showToast('Settings coming soon', 'info')">
+                        <span class="material-icons">settings</span>
+                    </button>
+                    <div class="user-account" id="userAccount" onclick="showUserDevicesModal()">A</div>
+                </div>
+            </header>
+
+            <section class="content">
+                <!-- Grade View - Hardcoded cards with proper structure -->
+                <div id="gradeView" class="view active">
+                    <div class="view-header">
+                        <h1>Select Grade</h1>
+                    </div>
+                    <div class="grade-container">
+                        <div class="cards-grid grades">
+                            <!-- Grade 9 -->
+                            <div class="card wide" data-card="grade9" onclick="showSubjects(9)" style="animation-delay: 0s">
+                                <div class="card-bg-pattern"></div>
+                                <div class="card-float">
+                                    <div class="emoji-scene">
+                                        <div class="emoji-main">9️⃣</div>
+                                        <div class="emoji-deco d1">🎒</div>
+                                        <div class="emoji-deco d2">📚</div>
+                                    </div>
+                                </div>
+                                <div class="card-title">Grade 9</div>
+                                <div class="card-subtitle">Freshman Year</div>
+                                <div class="card-wave" style="background: linear-gradient(90deg, transparent, #3b82f6, transparent)"></div>
+                            </div>
+                            
+                            <!-- Grade 10 -->
+                            <div class="card wide" data-card="grade10" onclick="showSubjects(10)" style="animation-delay: 0.05s">
+                                <div class="card-bg-pattern"></div>
+                                <div class="card-float">
+                                    <div class="emoji-scene">
+                                        <div class="emoji-main">🔟</div>
+                                        <div class="emoji-deco d1">🎯</div>
+                                        <div class="emoji-deco d2">📖</div>
+                                    </div>
+                                </div>
+                                <div class="card-title">Grade 10</div>
+                                <div class="card-subtitle">Sophomore Year</div>
+                                <div class="card-wave" style="background: linear-gradient(90deg, transparent, #10b981, transparent)"></div>
+                            </div>
+                            
+                            <!-- Grade 11 -->
+                            <div class="card wide" data-card="grade11" onclick="showSubjects(11)" style="animation-delay: 0.1s">
+                                <div class="card-bg-pattern"></div>
+                                <div class="card-float">
+                                    <div class="emoji-scene">
+                                        <div class="emoji-main">⏸️</div>
+                                        <div class="emoji-deco d1">🚀</div>
+                                        <div class="emoji-deco d2">🎓</div>
+                                    </div>
+                                </div>
+                                <div class="card-title">Grade 11</div>
+                                <div class="card-subtitle">Junior Year</div>
+                                <div class="card-wave" style="background: linear-gradient(90deg, transparent, #f59e0b, transparent)"></div>
+                            </div>
+                            
+                            <!-- Grade 12 -->
+                            <div class="card wide" data-card="grade12" onclick="showSubjects(12)" style="animation-delay: 0.15s">
+                                <div class="card-bg-pattern"></div>
+                                <div class="card-float">
+                                    <div class="emoji-scene">
+                                        <div class="emoji-main">🎓</div>
+                                        <div class="emoji-deco d1">👔</div>
+                                        <div class="emoji-deco d2">🏆</div>
+                                    </div>
+                                </div>
+                                <div class="card-title">Grade 12</div>
+                                <div class="card-subtitle">Senior Year</div>
+                                <div class="card-wave" style="background: linear-gradient(90deg, transparent, #ef4444, transparent)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subject View - Dynamic content injected by JS -->
+                <div id="subjectView" class="view">
+                    <div class="view-header">
+                        <h1 id="subjectTitle">Grade 9</h1>
+                    </div>
+                    <div class="subject-container">
+                        <div class="cards-grid subjects-10" id="subjectGrid">
+                            <!-- Subjects injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Unit View -->
+                <div id="unitView" class="view">
+                    <div class="view-header">
+                        <h2 id="unitTitle">Chemistry</h2>
+                    </div>
+                    <div class="unit-container">
+                        <div class="unit-grid" id="unitGrid"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <button class="fab" id="fab" onclick="toggleSelectionPanel()">
+            <span class="material-icons">edit</span>
+            <span class="fab-badge" id="fabBadge">0</span>
+        </button>
+
+        <!-- SELECTION PANEL -->
+        <div class="selection-panel" id="selectionPanel">
+            <div class="selection-header">
+                <div class="selection-header-content">
+                    <div class="selection-icon">
+                        <span class="material-icons">collections_bookmark</span>
+                    </div>
+                    <div class="selection-title-group">
+                        <h3>Your Collection</h3>
+                        <span class="selection-count" id="selectionCount">No units selected</span>
+                    </div>
+                </div>
+                <div class="selection-actions">
+                    <button class="clear-btn" id="clearBtn" onclick="clearAllSelections()" title="Clear all" style="display: none;">
+                        <span class="material-icons">delete_sweep</span>
+                    </button>
+                    <button class="done-btn" id="doneBtn" onclick="openAIModal()" disabled>Done</button>
+                </div>
+            </div>
+            
+            <div class="selection-list-container">
+                <div class="selection-list" id="selectionList">
+                    <div class="selection-empty">
+                        <div class="empty-illustration"></div>
+                        <h4>Start Building</h4>
+                        <p>Click on units to add them to your collection for AI processing</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="selection-footer" id="selectionFooter" style="display: none;">
+                <div class="selection-summary">
+                    <span class="material-icons">school</span>
+                    <span><strong id="footerCount">0</strong> units ready</span>
+                </div>
+            </div>
+        </div>
+<!-- AI MODAL -->
+<div class="ai-modal-overlay" id="aiModal">
+    <div class="ai-modal">
+        <h2>Use with AI</h2>
+        <p>Choose an AI tool for your selected units</p>
+        <div class="ai-options">
+            <div class="ai-option" onclick="selectAI('notebook')">
+                <div class="ai-option-icon notebook">📓</div>
+                <div class="ai-option-info">
+                    <div class="ai-option-name">NotebookLM</div>
+                    <div class="ai-option-desc">Google's notebook</div>
+                </div>
+                <span class="ai-option-arrow material-icons">arrow_forward</span>
+            </div>
+            <div class="ai-option" onclick="selectAI('gemini')">
+                <div class="ai-option-icon gemini">✨</div>
+                <div class="ai-option-info">
+                    <div class="ai-option-name">Gemini</div>
+                    <div class="ai-option-desc">Google's AI</div>
+                </div>
+                <span class="ai-option-arrow material-icons">arrow_forward</span>
+            </div>
+            <div class="ai-option" onclick="selectAI('deepseek')">
+                <div class="ai-option-icon deepseek">🧠</div>
+                <div class="ai-option-info">
+                    <div class="ai-option-name">DeepSeek</div>
+                    <div class="ai-option-desc">Deep reasoning</div>
+                </div>
+                <span class="ai-option-arrow material-icons">arrow_forward</span>
+            </div>
+            <div class="ai-option" onclick="selectAI('grok')">
+                <div class="ai-option-icon grok">🚀</div>
+                <div class="ai-option-info">
+                    <div class="ai-option-name">Grok</div>
+                    <div class="ai-option-desc">xAI's chatbot</div>
+                </div>
+                <span class="ai-option-arrow material-icons">arrow_forward</span>
+            </div>
+            <div class="ai-option" onclick="showCustomURL()">
+                <div class="ai-option-icon other">🔗</div>
+                <div class="ai-option-info">
+                    <div class="ai-option-name">Other</div>
+                    <div class="ai-option-desc">Custom AI website</div>
+                </div>
+                <span class="ai-option-arrow material-icons">arrow_forward</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CUSTOM URL MODAL - SEPARATE POPUP -->
+<div class="custom-url-overlay" id="customURLOverlay">
+    <div class="custom-url-modal">
+        <div class="custom-url-header">
+            <button class="back-to-ai" onclick="backToAI()">
+                <span class="material-icons">arrow_back</span>
+            </button>
+            <h2>Custom AI</h2>
+        </div>
+        <div class="custom-url-input-group">
+            <label>Enter AI Website URL</label>
+            <input type="url" class="custom-url-input" id="customURLInput" placeholder="https://..." autofocus>
+            <p class="custom-url-hint">Paste the URL of your preferred AI tool</p>
+        </div>
+        <div class="custom-url-actions">
+            <button class="btn-secondary" onclick="backToAI()">Back</button>
+            <button class="btn-primary" onclick="submitCustomURL()">Open</button>
+        </div>
+    </div>
+</div>
+
+
+        <!-- LOADER -->
+        <div id="loader">
+            <div class="spinner"></div>
+            <div class="step-msg" id="step">Initializing...</div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="firebase-auth.js"></script>
+    <script src="main.js"></script>
+    <script src="link.js"></script>
+</body>
+</html>

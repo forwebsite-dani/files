@@ -1,0 +1,123 @@
+
+/* ============================================
+   GRADE VIEW
+   ============================================ */
+
+.grade-container {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: clamp(8px, 2vh, 16px) clamp(12px, 2vw, 20px);
+    min-height: 0;
+    overflow: auto;
+}
+
+/* ============================================
+   SUBJECT VIEW
+   ============================================ */
+
+.subject-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+    min-height: 0;
+}
+
+/* ============================================
+   UNIT VIEW - Clean List
+   ============================================ */
+
+.unit-container {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 8px;
+    min-height: 0;
+}
+
+.unit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);   /* 2 columns */
+    gap: clamp(10px, 1.5vh, 14px);           /* same as before */
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    padding-bottom: 20px;
+}
+
+.unit-box {
+    background: var(--card-bg);
+    border-radius: var(--radius-sm);
+    padding: clamp(16px, 2.5vw, 24px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    position: relative;
+    min-height: var(--card-height-sm);
+}
+
+.unit-box:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+    background: var(--primary-light);
+    transform: translateX(4px);
+}
+
+.unit-box.selected {
+    border-color: var(--primary);
+    background: linear-gradient(145deg, white, var(--primary-light));
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.2);
+}
+
+.unit-box.selected::after {
+    content: 'check_circle';
+    font-family: 'Material Icons';
+    color: var(--primary);
+    font-size: 24px;
+    margin-left: 12px;
+    flex-shrink: 0;
+}
+
+.unit-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+}
+
+.unit-number {
+    font-size: clamp(0.7rem, 1.2vw, 0.75rem);
+    color: var(--primary);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.unit-name {
+    font-weight: 600;
+    font-size: clamp(0.9rem, 1.8vw, 1rem);
+    color: var(--foreground);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.unit-arrow {
+    color: var(--muted);
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.unit-box:hover .unit-arrow {
+    color: var(--primary);
+    transform: translateX(4px);
+}

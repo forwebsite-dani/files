@@ -1,0 +1,112 @@
+
+
+/* ============================================
+   UTILITY MODALS (Coffee, Devices)
+   ============================================ */
+
+.modal-input {
+    width: 100%;
+    padding: clamp(12px, 2vw, 16px);
+    margin: 16px 0 20px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: clamp(0.95rem, 1.8vw, 1rem);
+    font-family: inherit;
+    transition: border-color 0.2s ease;
+}
+
+.modal-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.modal-btn-primary {
+    flex: 2;
+    padding: clamp(12px, 2vw, 16px);
+    border: none;
+    border-radius: 10px;
+    background: var(--primary);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: clamp(0.9rem, 1.5vw, 0.95rem);
+}
+
+.modal-btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(99,102,241,0.3);
+}
+
+.modal-btn-cancel {
+    flex: 1;
+    padding: clamp(12px, 2vw, 16px);
+    border: none;
+    border-radius: 10px;
+    background: hsl(214 32% 96%);
+    color: var(--muted);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: clamp(0.9rem, 1.5vw, 0.95rem);
+}
+
+.modal-btn-cancel:hover {
+    background: hsl(214 32% 91%);
+    color: var(--foreground);
+}
+
+.modal-btn-logout {
+    width: 100%;
+    padding: clamp(12px, 2vw, 16px);
+    margin-bottom: 12px;
+    border: none;
+    border-radius: 10px;
+    background: hsl(0, 85%, 60%);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: clamp(0.9rem, 1.5vw, 0.95rem);
+}
+
+.modal-btn-logout:hover {
+    background: hsl(0, 75%, 50%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(239,68,68,0.3);
+}
+
+.devices-list {
+    max-height: min(200px, 30vh);
+    overflow-y: auto;
+    margin: 16px 0;
+    padding: 4px;
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+}
+
+.device-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    font-size: clamp(0.85rem, 1.3vw, 0.9rem);
+    color: var(--foreground);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.device-item:last-child {
+    border-bottom: none;
+}
+
+.device-item .material-icons {
+    font-size: 16px;
+    color: var(--muted);
+}
